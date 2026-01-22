@@ -7,7 +7,7 @@ class RepositorioCompras {
         listaCompra.add(compra)
     }
 
-    fun solicitarDomicilio(cliente: Cliente): String {
+    fun solicitarDomicilio(cliente: Cliente): Domicilio {
         return cliente.domicilio
     }
 }
