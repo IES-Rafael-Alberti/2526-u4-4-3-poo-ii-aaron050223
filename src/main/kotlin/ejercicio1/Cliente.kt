@@ -1,4 +1,6 @@
 package ejercicio1
 
-class Cliente {
-}
+data class Cliente(
+    val nombre: String,
+    val domicilio: String
+)
