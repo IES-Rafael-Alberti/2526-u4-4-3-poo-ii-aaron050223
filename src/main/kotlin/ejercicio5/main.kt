@@ -3,23 +3,25 @@ package ejercicio5
 fun main() {
     val tablero = Tablero()
     val juego = Juego()
-    var ganador = 0
+    var ganador: Int
+
     do {
-        val (a1,a2) = juego.pedirJugador1()
-        tablero.agregarFicha(a1,a2,1)
+        val (a1, a2) = juego.pedirJugador1()
+        tablero.agregarFicha(a1, a2, 1)
         tablero.mostrarTablero()
-        val acomprobacion1 = juego.comprobarVictoriaHorizontal(tablero)
-        val acomprobacion2 = juego.comprobarVictoriaVertical(tablero)
-        val acomprobacion3 = juego.comprobarVictoriaParalelo(tablero)
-        ganador = juego.comprobarVictoria(acomprobacion1,acomprobacion2,acomprobacion3)
-        val (b1,b2) = juego.pedirJugador2()
-        tablero.agregarFicha(b1,b2,2)
-        tablero.mostrarTablero()
-        val bcomprobacion1 = juego.comprobarVictoriaHorizontal(tablero)
-        val bcomprobacion2 = juego.comprobarVictoriaVertical(tablero)
-        val bcomprobacion3 = juego.comprobarVictoriaParalelo(tablero)
-        ganador = juego.comprobarVictoria(bcomprobacion1,bcomprobacion2,bcomprobacion3)
-    } while (ganador != 0)
+        ganador = juego.comprobarVictoria(juego.comprobarVictoriaHorizontal(tablero), juego.comprobarVictoriaVertical(tablero), juego.comprobarVictoriaParalelo(tablero))
+
+        if (ganador == 0) {
+            if (juego.comprobarTablero(tablero)) {
+                val (b1, b2) = juego.pedirJugador2()
+                tablero.agregarFicha(b1, b2, 2)
+                tablero.mostrarTablero()
+                ganador = juego.comprobarVictoria(juego.comprobarVictoriaHorizontal(tablero), juego.comprobarVictoriaVertical(tablero), juego.comprobarVictoriaParalelo(tablero))
+            }
+        }
+
+    } while (ganador == 0 && juego.comprobarTablero(tablero))
+
     println("--- FIN DEL JUEGO ---")
-    println("Ganador >> Jugador $ganador")
+    if (ganador != 0) println("Ganador >> Jugador $ganador") else println("Empate")
 }

@@ -3,16 +3,16 @@ package ejercicio5
 class Juego {
     fun pedirJugador1(): Pair<Int, Int> {
         println("Fila (Jugador 1): ")
-        val fila = readln().toInt()
+        val fila = (readln().toInt()) - 1
         println("Columna (Jugador 1): ")
-        val columna = readln().toInt()
+        val columna = (readln().toInt()) - 1
         return Pair(fila,columna)
     }
     fun pedirJugador2(): Pair<Int, Int> {
         println("Fila (Jugador 2): ")
-        val fila = readln().toInt()
+        val fila = (readln().toInt()) - 1
         println("Columna (Jugador 2): ")
-        val columna = readln().toInt()
+        val columna = (readln().toInt()) - 1
         return Pair(fila,columna)
     }
     fun comprobarTablero(tablero: Tablero): Boolean {
@@ -21,8 +21,10 @@ class Juego {
         return contador > 0
     }
     fun comprobarVictoriaHorizontal(tablero: Tablero): Int {
-        for (i in tablero.tablero) {
-            if (i.all { it == "" }) return 0 else if (i.all { it == "X" }) return 1 else if (i.all { it == "O" }) return 2
+        for (fila in tablero.tablero) {
+            if (fila[0] != "-" && fila.all { it == fila[0] }) {
+                return if (fila[0] == "X") 1 else 2
+            }
         }
         return 0
     }
@@ -38,10 +40,16 @@ class Juego {
         return 0
     }
     fun comprobarVictoriaParalelo(tablero: Tablero): Int {
-        if ((tablero.tablero[0][0] == tablero.tablero[1][1] && tablero.tablero[1][1] == tablero.tablero[2][2]) || (tablero.tablero[0][2] == tablero.tablero[1][1] && tablero.tablero[1][1] == tablero.tablero[2][0])) {
+        if (tablero.tablero[0][0] == tablero.tablero[1][1] && tablero.tablero[1][1] == tablero.tablero[2][2]) {
             when {
-                tablero.tablero[0][0] == "X" -> 1
-                tablero.tablero[0][0] == "O" -> 2
+                tablero.tablero[0][0] == "X" -> return 1
+                tablero.tablero[0][0] == "O" -> return 2
+
+            }
+        } else if (tablero.tablero[0][2] == tablero.tablero[1][1] && tablero.tablero[1][1] == tablero.tablero[2][0]) {
+            when {
+                tablero.tablero[0][2] == "X" -> return 1
+                tablero.tablero[0][2] == "O" -> return 2
 
             }
         }
